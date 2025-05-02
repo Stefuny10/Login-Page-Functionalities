@@ -1,0 +1,65 @@
+Feature: Login Functionality
+
+Scenario: Successful login with valid credentials
+  Given the user is on the login page
+  When the user enters username "lourdes100@test.com" and password "Test123!"
+  And the user checks the content security policy box
+  And the user clicks the "Sign in with Newspapers.com" button
+  Then the "Sign in with Newspapers.com" button should be enabled
+  And the user should be redirected to the dashboard
+
+Scenario: Unsuccessful login with invalid credentials
+  Given the user is on the login page
+  When the user enters an invalid username and invalid password
+  And the user checks the content security policy box
+  Then an error message should be displayed
+  And the user should not be redirected to the dashboard
+
+
+Feature:  Signing in using different account
+
+Scenario: Sign in using Ancestry account
+  Given the user is on the login page
+  And the user is trying to log in using an Ancestry account
+  When the user clicks the "Sign in with Ancestry" button
+  Then the user should be redirected to the Ancestry login page
+  And the user should be able to log in successfully
+
+Scenario: Sign in using Facebook account
+  Given the user is on the login page
+  And the user is trying to log in using a Facebook account
+  When the user clicks the "Sign in with Facebook" button
+  Then a message stating "Sign in with Facebook is no longer available. If you previously signed in with Facebook,   please use 'Sign in with Newspapers.com' and reset your password." should be displayed
+  And a "Reset Password" button should be visible 
+
+
+Feature: Forgot Password functionality
+
+Scenario: User is redirected to the reset password dashboard
+  Given the user is on the login page
+  And the user has forgotten their credentials
+  When the user clicks the "Forgot your Password?" text link
+  Then the user should be redirected to the reset password dashboard
+
+Scenario: User resets their password
+  Given the user is redirected to the reset password dashboard
+  When the user enters their Email or Member name
+  And the user clicks the "Send Password Reset Email" button
+  Then the "Send Password Reset Email" button should be enabled
+  And a message stating "If you have an account with us, you should receive an email with instructions for creating a new password." should be displayed
+
+  
+Feature: Validation of account to reset password
+
+Scenario: Valid member account
+  Given the user enters a valid member account
+  When the user checks their email inbox
+  Then the user should receive an email with instructions for creating a new password
+
+Scenario: Invalid member account
+  Given the user enters an invalid member account
+  When the user checks their email inbox
+  Then the user should not receive an email with instructions for creating a new password 
+
+
+
